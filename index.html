@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>20/10 - Đằng Sau Sương Mờ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,400&family=Alex+Brush&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Intro overlay to enable audio playback -->
+  <div id="introOverlay" class="intro-overlay">
+    <div class="intro-card">
+      <div class="intro-heart">💖</div>
+      <h2>Món Quà 20/10</h2>
+      <p class="intro-sub">Dành tặng người phụ nữ tuyệt vời nhất</p>
+      <button id="startBtn" class="glow-btn">
+        <span>✨ Chạm để khám phá ✨</span>
+      </button>
+      <p class="intro-hint">Bật âm thanh để có trải nghiệm trọn vẹn nhất</p>
+    </div>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="bgMusic" src="audio.mp3" loop preload="auto"></audio>
+
+  <!-- Background Animated Scene -->
+  <div class="scene">
+    <!-- Starry & ambient glow layers -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <!-- Canvas for Floating Particles & Rose Petals -->
+    <canvas id="petalCanvas"></canvas>
+
+    <!-- Glowing Heart & Date Behind the Mist -->
+    <div class="behind-mist-content">
+      <div class="date-badge">20 • 10</div>
+      
+      <!-- Pulsing Glowing Heart -->
+      <div class="heart-wrapper">
+        <div class="heart-pulse bk hr"></div>
+        <div class="heart-glow"></div>
+        <div class="heart-svg-container">
+          <svg viewBox="0 0 100 90" class="heart-svg">
+            <defs>
+              <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff758c" />
+                <stop offset="50%" stop-color="#ff4b72" />
+                <stop offset="100%" stop-color="#f80759" />
+              </linearGradient>
+              <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <path d="M 50,25 
+                     C 50,10 35,0 20,0 
+                     C 5,0 0,15 0,25 
+                     C 0,45 25,65 50,85 
+                     C 75,65 100,45 100,25 
+                     C 100,15 95,0 80,0 
+                     C 65,0 50,10 50,25 Z" 
+                  fill="url(#heartGrad)" 
+                  filter="url(#glowFilter)" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="greeting-subtitle">Happy Vietnamese Women's Day</div>
+      <div class="sparkle-tag">Nguyễn Thị Khánh Linh ✨</div>
+    </div>
+
+    <!-- Interactive Mist / Frosted Glass Canvas Layer -->
+    <canvas id="mistCanvas"></canvas>
+
+    <!-- Water Droplets Overlay for realistic glass effect -->
+    <div id="dropletsContainer" class="droplets-container"></div>
+
+    <!-- Hint / Guide to Wipe -->
+    <div id="wipeHint" class="wipe-hint">
+      <span class="hand-icon">👆</span>
+      <span>Dùng chuột lau nhẹ lớp sương mờ điii...</span>
+    </div>
+
+    <!-- Bottom Poetic Lyrics from the original video -->
+    <div class="title bottom-poem">
+      <p class="poem-line line-1">Đằng sau sương mờ là tất cả</p>
+      <p class="poem-line line-2">dịu dàng và sự yêu thương anh muốn</p>
+      <p class="poem-line line-3">gửi trao cho em</p>
+    </div>
+
+    <!-- Floating Action Controls -->
+    <div class="controls-bar">
+      <button id="musicToggle" class="ctrl-btn" title="Bật/Tắt nhạc">
+        <span class="icon">🎵</span>
+      </button>
+      <button id="autoWipeBtn" class="ctrl-btn" title="Tự động lau sương">
+        <span class="icon">🪄</span>
+        <span class="label">Tự động lau</span>
+      </button>
+      <button id="refogBtn" class="ctrl-btn" title="Tạo lại sương mờ">
+        <span class="icon">🌫️</span>
+        <span class="label">Phủ sương</span>
+      </button>
+      <button id="letterBtn" class="ctrl-btn highlight" title="Mở thư chúc">
+        <span class="icon">💌</span>
+        <span class="label">Lời chúc</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Letter / Wishes Popup Modal -->
+  <div id="letterModal" class="modal-overlay">
+    <div class="modal-envelope">
+      <button id="closeModalBtn" class="close-modal">&times;</button>
+      <div class="letter-stamp">20/10</div>
+      <div class="letter-content">
+        <h3 class="letter-title">Gửi Em - Người Phụ Nữ Tuyệt Vời Nhất 🌹</h3>
+        <p class="letter-greeting">Nhân ngày Phụ nữ Việt Nam 20/10,</p>
+        <p class="letter-body">
+          Chúc em luôn ngập tràn niềm vui, nụ cười rạng rỡ và hạnh phúc trong từng khoảnh khắc. 
+          Cảm ơn vì đã luôn mang đến sự ấm áp, dịu dàng và những điều ngọt ngào nhất cho cuộc sống này.
+        </p>
+        <p class="letter-body">
+          Mong em mỗi ngày đều được yêu thương, trân trọng và tỏa sáng như đóa hoa đẹp nhất giữa muôn ngàn sắc thắm. ✨
+        </p>
+        <p class="letter-sign">Yêu emmm ❤️</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast-msg"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
